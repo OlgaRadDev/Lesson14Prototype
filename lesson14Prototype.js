@@ -40,34 +40,48 @@ Student.prototype.getAgeStudent = function () {
 
 };
 
-Student.prototype.getAverageMark = function () {
-    let sumMark = this.mark.reduce(function (sum, mark) {
-        return sum + mark;
-    },0);
-    let avgMark = (sumMark/this.mark.length).toFixed(2);
-    return avgMark;
-};
-
 Student.prototype.fillMark = function (mark) {
-    if (this.mark.length <30) {
-        return this.mark.push(mark);
-    } else
-        return false;
+    for (let i = 0; i < 30; i++){
+        if (this.mark[i] === undefined) {
+            this.mark[i] = mark;
+            return;
+        }
+    }
+    if (this.mark.length > 30) {
+        return false
+    }
 };
 
 Student.prototype.isPresent = function () {
-    if (this.attendance.length <30) {
-        return this.attendance.push(true);
-    } else
-        return false;
-
+    for (let i = 0; i < 30; i++){
+        if (this.attendance[i] === undefined) {
+            this.attendance[i] = true;
+            return;
+        }
+    }
 };
 Student.prototype.isAbsent = function () {
-    if (this.attendance.length <30) {
-        return this.attendance.push(false);
-    } else
-        return false;
+    for (let i = 0; i < 30; i++){
+        if (this.attendance[i] === undefined) {
+            this.attendance[i] = false;
+            return;
+        }
+    }
 };
+
+Student.prototype.getAverageMark = function () {
+    let sumMark = this.mark.reduce(function (sum, mark) {
+        return sum + mark;
+
+
+    },0);
+    console.log(sumMark)
+    let avgMark = (sumMark/this.mark.length).toFixed(2);
+    console.log(this.mark.length);
+    return avgMark;
+};
+
+
 Student.prototype.getAvgAttendance = function () {
     let attend = this.attendance.filter(function (item) {
         if (item)
@@ -86,13 +100,15 @@ Student.prototype.checkSummary = function () {
     } else
         return 'Редиска!';
 
+
 };
 console.log('First student ----------------------------');
 const alex = new Student('Alex', 'Ivanov', '1992');
 console.log(alex.getFullName());
 console.log('Age student: ' + alex.getAgeStudent());
-
 alex.fillMark(5);
+alex.fillMark(10);
+alex.fillMark(10);
 alex.fillMark(10);
 alex.fillMark(10);
 alex.fillMark(10);
@@ -108,49 +124,49 @@ alex.isPresent();
 console.log('Average attandance: '+ alex.getAvgAttendance());
 console.log(alex);
 console.log('Work result: '+alex.checkSummary());
-
-console.log('Second student ----------------------------');
-const petya = new Student('Petya', 'Petechkin', '1995');
-console.log(petya.getFullName());
-console.log('Age student: ' + petya.getAgeStudent());
-
-petya.fillMark(5);
-petya.fillMark(2);
-petya.fillMark(0);
-petya.fillMark(1);
-petya.fillMark(8);
-petya.fillMark(10);
-console.log('Average mark: ' + petya.getAverageMark());
-petya.isPresent();
-petya.isPresent();
-petya.isAbsent();
-petya.isAbsent();
-petya.isPresent();
-petya.isPresent();
-console.log('Average attandance: '+ petya.getAvgAttendance());
-console.log(petya);
-console.log('Work result: '+petya.checkSummary());
-
-console.log('Third student ----------------------------');
-const vasiliy = new Student('Vasiliy', 'Orlov', '1991');
-console.log(vasiliy.getFullName());
-console.log('Age student: ' + vasiliy.getAgeStudent());
-
-vasiliy.fillMark(10);
-vasiliy.fillMark(10);
-vasiliy.fillMark(10);
-vasiliy.fillMark(10);
-vasiliy.fillMark(9);
-vasiliy.fillMark(10);
-console.log('Average mark: ' + vasiliy.getAverageMark());
-vasiliy.isPresent();
-vasiliy.isPresent();
-vasiliy.isPresent();
-vasiliy.isPresent();
-vasiliy.isPresent();
-vasiliy.isPresent();
-console.log('Average attandance: '+ vasiliy.getAvgAttendance());
-console.log(vasiliy);
-console.log('Work result: '+vasiliy.checkSummary());
+//
+// console.log('Second student ----------------------------');
+// const petya = new Student('Petya', 'Petechkin', '1995');
+// console.log(petya.getFullName());
+// console.log('Age student: ' + petya.getAgeStudent());
+//
+// petya.fillMark(5);
+// petya.fillMark(2);
+// petya.fillMark(0);
+// petya.fillMark(1);
+// petya.fillMark(8);
+// petya.fillMark(10);
+// console.log('Average mark: ' + petya.getAverageMark());
+// petya.isPresent();
+// petya.isPresent();
+// petya.isAbsent();
+// petya.isAbsent();
+// petya.isPresent();
+// petya.isPresent();
+// console.log('Average attandance: '+ petya.getAvgAttendance());
+// console.log(petya);
+// console.log('Work result: '+petya.checkSummary());
+//
+// console.log('Third student ----------------------------');
+// const vasiliy = new Student('Vasiliy', 'Orlov', '1991');
+// console.log(vasiliy.getFullName());
+// console.log('Age student: ' + vasiliy.getAgeStudent());
+//
+// vasiliy.fillMark(10);
+// vasiliy.fillMark(10);
+// vasiliy.fillMark(10);
+// vasiliy.fillMark(10);
+// vasiliy.fillMark(9);
+// vasiliy.fillMark(10);
+// console.log('Average mark: ' + vasiliy.getAverageMark());
+// vasiliy.isPresent();
+// vasiliy.isPresent();
+// vasiliy.isPresent();
+// vasiliy.isPresent();
+// vasiliy.isPresent();
+// vasiliy.isPresent();
+// console.log('Average attandance: '+ vasiliy.getAvgAttendance());
+// console.log(vasiliy);
+// console.log('Work result: '+vasiliy.checkSummary());
 
 
