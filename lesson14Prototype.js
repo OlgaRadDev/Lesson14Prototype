@@ -25,8 +25,8 @@ function Student(name, surname, yearBirth) {
     this.name = name;
     this.surname = surname;
     this.yearBirth = yearBirth;
-    this.mark = [];
-    this.attendance = [];
+    this.mark = Array(30);
+    this.attendance = Array(30);
 }
 
 Student.prototype.getFullName = function () {
@@ -41,7 +41,7 @@ Student.prototype.getAgeStudent = function () {
 };
 
 Student.prototype.fillMark = function (mark) {
-    for (let i = 0; i < 30; i++){
+    for (let i = 0; i < this.mark.length; i++){
         if (this.mark[i] === undefined) {
             this.mark[i] = mark;
             return;
@@ -53,41 +53,56 @@ Student.prototype.fillMark = function (mark) {
 };
 
 Student.prototype.isPresent = function () {
-    for (let i = 0; i < 30; i++){
+    for (let i = 0; i < this.attendance.length; i++){
         if (this.attendance[i] === undefined) {
             this.attendance[i] = true;
             return;
         }
     }
+    if (this.attendance.length > 30) {
+        return false
+    }
 };
 Student.prototype.isAbsent = function () {
-    for (let i = 0; i < 30; i++){
+    for (let i = 0; i < this.attendance.length; i++){
         if (this.attendance[i] === undefined) {
             this.attendance[i] = false;
             return;
         }
+    }
+    if (this.attendance.length > 30) {
+        return false
     }
 };
 
 Student.prototype.getAverageMark = function () {
     let sumMark = this.mark.reduce(function (sum, mark) {
         return sum + mark;
-
-
     },0);
-    console.log(sumMark)
-    let avgMark = (sumMark/this.mark.length).toFixed(2);
-    console.log(this.mark.length);
+
+    let countMark = 0;
+    for (let i =0; i<this.mark.length; i++){
+        if (this.mark[i] !== undefined) {
+            countMark++;
+        }
+    }
+    let avgMark = (sumMark/countMark).toFixed(2);
     return avgMark;
 };
 
 
 Student.prototype.getAvgAttendance = function () {
-    let attend = this.attendance.filter(function (item) {
+    let attendedLessons = this.attendance.filter(function (item) {
         if (item)
             return item;
         });
-    let avgAttendance = (attend.length/this.attendance.length).toFixed(2);
+    let countTotalLessons = 0;
+    for (let i =0; i<this.attendance.length; i++){
+        if (this.attendance[i] !== undefined) {
+            countTotalLessons++;
+        }
+    }
+    let avgAttendance = (attendedLessons.length/countTotalLessons).toFixed(2);
     return avgAttendance;
 
 };
@@ -95,11 +110,10 @@ Student.prototype.getAvgAttendance = function () {
 Student.prototype.checkSummary = function () {
     if (this.getAverageMark()>9 && this.getAvgAttendance()>0.9){
         return 'Ути какой молодчинка!';
-    } else if ((this.getAverageMark()<9 && this.getAvgAttendance()>0.9) || (this.getAverageMark()>9 && this.getAvgAttendance()<0.9)) {
-        return 'Норм, но можно лучше'
+    } else if (this.getAverageMark()<9 && this.getAvgAttendance()<0.9) {
+        return 'Редиска!'
     } else
-        return 'Редиска!';
-
+        return 'Норм, но можно лучше';
 
 };
 console.log('First student ----------------------------');
@@ -121,52 +135,54 @@ alex.isAbsent();
 alex.isAbsent();
 alex.isPresent();
 alex.isPresent();
+alex.isAbsent();
+alex.isPresent();
 console.log('Average attandance: '+ alex.getAvgAttendance());
 console.log(alex);
 console.log('Work result: '+alex.checkSummary());
-//
-// console.log('Second student ----------------------------');
-// const petya = new Student('Petya', 'Petechkin', '1995');
-// console.log(petya.getFullName());
-// console.log('Age student: ' + petya.getAgeStudent());
-//
-// petya.fillMark(5);
-// petya.fillMark(2);
-// petya.fillMark(0);
-// petya.fillMark(1);
-// petya.fillMark(8);
-// petya.fillMark(10);
-// console.log('Average mark: ' + petya.getAverageMark());
-// petya.isPresent();
-// petya.isPresent();
-// petya.isAbsent();
-// petya.isAbsent();
-// petya.isPresent();
-// petya.isPresent();
-// console.log('Average attandance: '+ petya.getAvgAttendance());
-// console.log(petya);
-// console.log('Work result: '+petya.checkSummary());
-//
-// console.log('Third student ----------------------------');
-// const vasiliy = new Student('Vasiliy', 'Orlov', '1991');
-// console.log(vasiliy.getFullName());
-// console.log('Age student: ' + vasiliy.getAgeStudent());
-//
-// vasiliy.fillMark(10);
-// vasiliy.fillMark(10);
-// vasiliy.fillMark(10);
-// vasiliy.fillMark(10);
-// vasiliy.fillMark(9);
-// vasiliy.fillMark(10);
-// console.log('Average mark: ' + vasiliy.getAverageMark());
-// vasiliy.isPresent();
-// vasiliy.isPresent();
-// vasiliy.isPresent();
-// vasiliy.isPresent();
-// vasiliy.isPresent();
-// vasiliy.isPresent();
-// console.log('Average attandance: '+ vasiliy.getAvgAttendance());
-// console.log(vasiliy);
-// console.log('Work result: '+vasiliy.checkSummary());
+
+console.log('Second student ----------------------------');
+const petya = new Student('Petya', 'Petechkin', '1995');
+console.log(petya.getFullName());
+console.log('Age student: ' + petya.getAgeStudent());
+
+petya.fillMark(5);
+petya.fillMark(2);
+petya.fillMark(0);
+petya.fillMark(1);
+petya.fillMark(8);
+petya.fillMark(10);
+console.log('Average mark: ' + petya.getAverageMark());
+petya.isPresent();
+petya.isPresent();
+petya.isAbsent();
+petya.isAbsent();
+petya.isPresent();
+petya.isPresent();
+console.log('Average attandance: '+ petya.getAvgAttendance());
+console.log(petya);
+console.log('Work result: '+petya.checkSummary());
+
+console.log('Third student ----------------------------');
+const vasiliy = new Student('Vasiliy', 'Orlov', '1991');
+console.log(vasiliy.getFullName());
+console.log('Age student: ' + vasiliy.getAgeStudent());
+
+vasiliy.fillMark(10);
+vasiliy.fillMark(10);
+vasiliy.fillMark(10);
+vasiliy.fillMark(10);
+vasiliy.fillMark(9);
+vasiliy.fillMark(10);
+console.log('Average mark: ' + vasiliy.getAverageMark());
+vasiliy.isPresent();
+vasiliy.isPresent();
+vasiliy.isPresent();
+vasiliy.isPresent();
+vasiliy.isPresent();
+vasiliy.isPresent();
+console.log('Average attandance: '+ vasiliy.getAvgAttendance());
+console.log(vasiliy);
+console.log('Work result: '+vasiliy.checkSummary());
 
 
